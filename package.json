@@ -1,0 +1,25 @@
+{
+  "name": "finereport-table-plugin",
+  "version": "1.0.0",
+  "description": "finereport table plugin",
+  "main": "iapvt.config.js",
+  "scripts": {
+    "cli": "iapvt cli -r -s"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iapYang/finereport-table-plugin.git"
+  },
+  "author": "iapyang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/iapYang/finereport-table-plugin/issues"
+  },
+  "homepage": "https://github.com/iapYang/finereport-table-plugin#readme",
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^4.4.1",
+    "eslint-plugin-html": "^3.1.1",
+    "iapyang-vue-template": "^0.5.5"
+  }
+}
