@@ -37,7 +37,7 @@ export default class {
                     .data('col', j)
                     .addClass(`row-${i}`)
                     .addClass(`col-${j}`)
-                ;
+                    ;
 
                 if (i === 0 && this.rowHeader) {
                     $td.addClass('header-td');
@@ -74,12 +74,6 @@ export default class {
         const $td = this.$table.find('td');
 
         $td.on('click', e => {
-            if (e.button === 0) {
-                this.$menu.offset({
-                    top: 0,
-                    left: 0,
-                }).removeClass('active');
-            }
             const $item = $(e.currentTarget);
 
             if ($item.hasClass('selected')) {
@@ -96,8 +90,17 @@ export default class {
                 top: e.pageY,
                 left: e.pageX,
             }).addClass('active');
-            
+
             return false;
+        });
+
+        $(document).on('click', e => {
+            if (e.button === 0) {
+                this.$menu.offset({
+                    top: 0,
+                    left: 0,
+                }).removeClass('active');
+            }
         });
     }
 }
