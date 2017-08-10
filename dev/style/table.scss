@@ -36,6 +36,15 @@
             &.underline {
                 text-decoration: underline;
             }
+            &.text-left {
+                text-align: left;
+            }
+            &.text-center {
+                text-align: center;
+            }
+            &.text-right {
+                text-align: right;
+            }
         }
     }
     .menu-list {
@@ -58,7 +67,7 @@
                 background-color: #f5f5f5;
             }
             &.font {
-                .font-setting {
+                .font-setting, .font-sub-setting {
                     position: absolute;
                     left: 100%;
                     top: 0px;
@@ -68,6 +77,9 @@
                     .font-setting {
                         display: block;
                     }
+                }
+                .fontAlign:hover .font-sub-setting {
+                    display: block;
                 }
             }
         }

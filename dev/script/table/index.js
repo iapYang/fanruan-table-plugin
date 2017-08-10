@@ -19,6 +19,9 @@ export default class {
         this.$btnFontBlack = this.$menu.find('.fontBlack');
         this.$btnFontItalic = this.$menu.find('.fontItalic');
         this.$btnFontUnderline = this.$menu.find('.fontUnderline');
+        this.$btnTextLeft = this.$menu.find('.textLeft');
+        this.$btnTextCenter = this.$menu.find('.textCenter');
+        this.$btnTextRight = this.$menu.find('.textRight');
 
         this.tdEventListener();
     }
@@ -71,6 +74,19 @@ export default class {
                         <li class="fontBlack">加粗 / 正常</li>
                         <li class="fontItalic">斜体 / 正常</li>
                         <li class="fontUnderline">下划线 / 正常</li>
+                        <li class="fontAlign">文字对齐
+                            <ul class="font-sub-setting">
+                                <li class="textLeft">
+                                    左对齐
+                                </li>
+                                <li class="textCenter">
+                                    居中
+                                </li>
+                                <li class="textRight">
+                                    右对齐
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -81,9 +97,17 @@ export default class {
     fontHandler(className) {
         const $selected = this.$table.find('.selected');
 
-        const funcName = $selected.hasClass(className) ? 'removeClass' : 'addClass';
+        if (className.search('text') !== -1) {
+            $selected
+                .removeClass('text-left')
+                .removeClass('text-center')
+                .removeClass('text-right')
+                .addClass(className);
+        } else {
+            const funcName = $selected.hasClass(className) ? 'removeClass' : 'addClass';
 
-        $selected[funcName](className);
+            $selected[funcName](className);
+        }
     }
     tdEventListener() {
         const $td = this.$table.find('td');
@@ -126,6 +150,18 @@ export default class {
 
         this.$btnFontUnderline.on('click', () => {
             this.fontHandler('underline');
+        });
+
+        this.$btnTextLeft.on('click', () => {
+            this.fontHandler('text-left');
+        });
+
+        this.$btnTextCenter.on('click', () => {
+            this.fontHandler('text-center');
+        });
+
+        this.$btnTextRight.on('click', () => {
+            this.fontHandler('text-right');
         });
     }
 }
