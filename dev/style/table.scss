@@ -1,0 +1,33 @@
+.table-container {
+    box-sizing: border-box;
+    table {
+        display: table;
+        // border: 0.5px solid rgb(194, 208, 222);
+        td {
+            position: relative;
+            display: inline-table;
+            font-size: 14px;
+            min-width: 60px;
+            min-height: 40px;
+            // border: 0.5px solid rgb(194, 208, 222);
+            cursor: pointer;
+            .drag {
+                position: absolute;
+                width: 20%;
+                right: 0;
+                bottom: 0;
+                cursor: se-resize;
+                img {
+                    display: block;
+                    width: 100%;
+                }
+            }
+            &.header-td {
+                background-color: rgb(237, 243, 248);
+            }
+            &.selected {
+                border-color: blue;
+            }
+        }
+    }
+}
