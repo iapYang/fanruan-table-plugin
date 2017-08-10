@@ -15,6 +15,9 @@ export default class {
 
         this.$menu = this.createMenu();
         this.$container.append(this.$menu);
+
+        this.$btnFontBlack = this.$menu.find('.fontBlack');
+
         this.tdEventListener();
     }
     createTable() {
@@ -63,9 +66,9 @@ export default class {
                 <li>合并单元格</li>
                 <li class="font">设置字体
                     <ul class="font-setting">
-                        <li>加粗</li>
-                        <li>斜体</li>
-                        <li>下划线</li>
+                        <li class="fontBlack">加粗 / 正常</li>
+                        <li class="fontItalic">斜体 / 正常</li>
+                        <li class="underline">下划线 / 正常</li>
                     </ul>
                 </li>
             </ul>
@@ -87,8 +90,6 @@ export default class {
         });
 
         $td.contextmenu(e => {
-            console.log(e.pageX, e.pageY, e.currentTarget);
-
             this.$menu.offset({
                 top: e.pageY,
                 left: e.pageX,
@@ -104,6 +105,16 @@ export default class {
                     left: 0,
                 }).removeClass('active');
             }
+        });
+
+        this.$btnFontBlack.on('click', () => {
+            const $selected = this.$table.find('.selected');
+            console.log($selected.css('font-weight') === '400');
+            const fontWeight = $selected.css('font-weight') === '400' ? 'bold' : 'normal';
+
+            $selected.css({
+                'font-weight': fontWeight,
+            });
         });
     }
 }
