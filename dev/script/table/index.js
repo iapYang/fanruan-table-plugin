@@ -17,6 +17,8 @@ export default class {
         this.$container.append(this.$menu);
 
         this.$btnFontBlack = this.$menu.find('.fontBlack');
+        this.$btnFontItalic = this.$menu.find('.fontItalic');
+        this.$btnFontUnderline = this.$menu.find('.fontUnderline');
 
         this.tdEventListener();
     }
@@ -68,13 +70,20 @@ export default class {
                     <ul class="font-setting">
                         <li class="fontBlack">加粗 / 正常</li>
                         <li class="fontItalic">斜体 / 正常</li>
-                        <li class="underline">下划线 / 正常</li>
+                        <li class="fontUnderline">下划线 / 正常</li>
                     </ul>
                 </li>
             </ul>
         `);
 
         return $ul;
+    }
+    fontHandler(className) {
+        const $selected = this.$table.find('.selected');
+
+        const funcName = $selected.hasClass(className) ? 'removeClass' : 'addClass';
+
+        $selected[funcName](className);
     }
     tdEventListener() {
         const $td = this.$table.find('td');
@@ -108,13 +117,15 @@ export default class {
         });
 
         this.$btnFontBlack.on('click', () => {
-            const $selected = this.$table.find('.selected');
-            console.log($selected.css('font-weight') === '400');
-            const fontWeight = $selected.css('font-weight') === '400' ? 'bold' : 'normal';
+            this.fontHandler('bold');
+        });
 
-            $selected.css({
-                'font-weight': fontWeight,
-            });
+        this.$btnFontItalic.on('click', () => {
+            this.fontHandler('italic');
+        });
+
+        this.$btnFontUnderline.on('click', () => {
+            this.fontHandler('underline');
         });
     }
 }

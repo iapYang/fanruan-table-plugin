@@ -27,6 +27,15 @@
             &.selected {
                 background-color: #e6e6e6;
             }
+            &.bold {
+                font-weight: bold;
+            }
+            &.italic {
+                font-style: italic;
+            }
+            &.underline {
+                text-decoration: underline;
+            }
         }
     }
     .menu-list {
