@@ -12,6 +12,9 @@ export default class {
 
         this.$table = this.createTable();
         this.$container.append(this.$table);
+
+        this.$menu = this.createMenu();
+        this.$container.append(this.$menu);
         this.tdEventListener();
     }
     createTable() {
@@ -55,10 +58,28 @@ export default class {
 
         return $table;
     }
+    createMenu() {
+        const $ul = $(`
+            <ul class="menu-list">
+                <li>合并单元格</li>
+                <li>合并单元格</li>
+                <li>合并单元格</li>
+                <li>合并单元格</li>
+            </ul>
+        `);
+
+        return $ul;
+    }
     tdEventListener() {
         const $td = this.$table.find('td');
 
         $td.on('click', e => {
+            if (e.button === 0) {
+                this.$menu.offset({
+                    top: 0,
+                    left: 0,
+                }).removeClass('active');
+            }
             const $item = $(e.currentTarget);
 
             if ($item.hasClass('selected')) {
@@ -66,6 +87,17 @@ export default class {
             } else {
                 $item.addClass('selected');
             }
+        });
+
+        $td.contextmenu(e => {
+            console.log(e.pageX, e.pageY, e.currentTarget);
+
+            this.$menu.offset({
+                top: e.pageY,
+                left: e.pageX,
+            }).addClass('active');
+            
+            return false;
         });
     }
 }
