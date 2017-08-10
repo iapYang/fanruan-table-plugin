@@ -21,7 +21,6 @@ export default class {
                 if (this.isResizing) {
                     const col = this.$td.data('col');
                     const row = this.$td.data('row');
-                    console.log(col, row);
                     this.$table.find(`.row-${row}`).css({
                         height: e.pageY - this.$td.offset().top,
                     });
