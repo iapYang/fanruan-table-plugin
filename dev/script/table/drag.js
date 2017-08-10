@@ -1,28 +1,33 @@
 import $ from 'jquery';
 
 export default class {
-    constructor(selector) {
+    constructor(selector, table) {
+        this.$table = $(table);
         this.$td = $(selector);
-        this.$tr = this.$td.parent();
         this.$drag = this.$td.find('.drag');
 
         this.isResizing = false;
-        this.lastDownX = 0;
 
         this.addEventListener();
     }
     addEventListener() {
         this.$drag.on('mousedown', e => {
             this.isResizing = true;
-            this.lastDownX = e.clientX;
-            console.log('mousedown');
             e.preventDefault();
         });
 
         $(document)
             .on('mousemove', e => {
                 if (this.isResizing) {
-                    console.log('23333');
+                    const col = this.$td.data('col');
+                    const row = this.$td.data('row');
+                    console.log(col, row);
+                    this.$table.find(`.row-${row}`).css({
+                        height: e.pageY - this.$td.offset().top,
+                    });
+                    this.$table.find(`.col-${col}`).css({
+                        width: e.pageX - this.$td.offset().left,
+                    });
                 }
             })
             .on('mouseup', () => {

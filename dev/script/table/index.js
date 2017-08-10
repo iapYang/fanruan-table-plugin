@@ -29,7 +29,12 @@ export default class {
                     </div>
                 `);
 
-                $td.data('row', i).data('col', j);
+                $td
+                    .data('row', i)
+                    .data('col', j)
+                    .addClass(`row-${i}`)
+                    .addClass(`col-${j}`)
+                ;
 
                 if (i === 0 && this.rowHeader) {
                     $td.addClass('header-td');
@@ -40,7 +45,7 @@ export default class {
 
                 if (!$td.hasClass('header-td')) {
                     $td.append($drag);
-                    new Drag($td);
+                    new Drag($td, $table);
                 }
 
                 $tr.append($td);
