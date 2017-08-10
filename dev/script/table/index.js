@@ -36,8 +36,7 @@ export default class {
                     .data('row', i)
                     .data('col', j)
                     .addClass(`row-${i}`)
-                    .addClass(`col-${j}`)
-                    ;
+                    .addClass(`col-${j}`);
 
                 if (i === 0 && this.rowHeader) {
                     $td.addClass('header-td');
@@ -62,9 +61,13 @@ export default class {
         const $ul = $(`
             <ul class="menu-list">
                 <li>合并单元格</li>
-                <li>合并单元格</li>
-                <li>合并单元格</li>
-                <li>合并单元格</li>
+                <li class="font">设置字体
+                    <ul class="font-setting">
+                        <li>加粗</li>
+                        <li>斜体</li>
+                        <li>下划线</li>
+                    </ul>
+                </li>
             </ul>
         `);
 
