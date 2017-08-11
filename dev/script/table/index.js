@@ -30,17 +30,19 @@ export default class {
         this.$btnTextRight = this.$menu.find('.textRight');
 
         this.$btnChangeContent = this.$menu.find('.changeContent');
+        this.$btnAllInOne = this.$menu.find('.allInOne');
 
         this.tdEventListener();
     }
     createTable() {
         const $table = $('<table cellspacing="0"></table>');
+        const $tbody = $('<tbody></tbody>');
 
         for (let i = 0; i < this.data.length; i++) {
             const $tr = $('<tr></tr>');
             for (let j = 0; j < this.data[i].length; j++) {
                 const $td = $(`
-                    <td>
+                    <td colspan="1">
                         <input value="${this.data[i][j]}" disabled/>
                     </td>
                 `);
@@ -70,15 +72,17 @@ export default class {
 
                 $tr.append($td);
             }
-            $table.append($tr);
+            $tbody.append($tr);
         }
+
+        $table.append($tbody);
 
         return $table;
     }
     createMenu() {
         const $ul = $(`
             <ul class="menu-list">
-                <li>合并单元格</li>
+                <li class="allInOne">合并单元格</li>
                 <li class="font">设置字体
                     <ul class="font-setting">
                         <li class="fontBlack">加粗 / 正常</li>
@@ -206,6 +210,34 @@ export default class {
 
         this.$btnChangeContent.on('click', () => {
             this.enableInput();
+        });
+
+        this.$btnAllInOne.on('click', () => {
+            const $selected = this.$table.find('.selected');
+
+            const rowSet = new Set();
+            const colSet = new Set();
+
+            $selected.each((index, item) => {
+                const $item = $(item);
+                rowSet.add($item.data('row'));
+                colSet.add($item.data('col'));
+            });
+
+            console.log(rowSet.size, colSet.size);
+
+            if (rowSet.size !== 1 && colSet.size !== 1) return;
+
+            const attribute = rowSet.size === 1 ? 'colspan' : 'rowspan';
+            const length = $selected.length;
+
+            $selected.each((index, item) => {
+                if (index !== 0) {
+                    $(item).remove();
+                }
+            });
+
+            $selected.eq(0).attr(attribute, length);
         });
     }
 }
