@@ -17,6 +17,7 @@
                 border-width: 0;
                 line-height: inherit;
                 cursor: pointer;
+                user-select: none;
                 &:focus {
                     outline-width: 0;
                 }

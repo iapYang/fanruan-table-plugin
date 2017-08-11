@@ -8,6 +8,8 @@ export default class {
         this.rowHeader = options.rowHeader || false;
         this.colHeader = options.colHeader || false;
 
+        this.ifCtrlPressed = false;
+
         this.$container = $(selector);
 
         this.$table = this.createTable();
@@ -22,6 +24,8 @@ export default class {
         this.$btnTextLeft = this.$menu.find('.textLeft');
         this.$btnTextCenter = this.$menu.find('.textCenter');
         this.$btnTextRight = this.$menu.find('.textRight');
+
+        this.$btnChangeContent = this.$menu.find('.changeContent');
 
         this.tdEventListener();
     }
@@ -91,6 +95,9 @@ export default class {
                         </li>
                     </ul>
                 </li>
+                <li class="changeContent">
+                    修改文字
+                </li>
             </ul>
         `);
 
@@ -111,18 +118,38 @@ export default class {
             $selected[funcName](className);
         }
     }
+    clearInputStatus($td) {
+        $td.each((index, item) => {
+            const $item = $(item);
+            if (!$item.hasClass('selected')) {
+                $item.find('input').attr('disabled', true);
+            }
+        });
+    }
+    enableInput() {
+        const $selected = this.$table.find('.selected');
+
+        $selected
+            .find('input')
+            .attr('disabled', false);
+    }
     tdEventListener() {
         const $td = this.$table.find('td');
 
-        $td.on('click', e => {
-            const $item = $(e.currentTarget);
+        $td
+            .on('click', e => {
+                const $item = $(e.currentTarget);
 
-            if ($item.hasClass('selected')) {
-                $item.removeClass('selected');
-            } else {
+                if (!this.ifCtrlPressed) {
+                    $td.removeClass('selected');
+                }
+
                 $item.addClass('selected');
-            }
-        });
+                this.clearInputStatus($td);
+            })
+            .on('dblclick', () => {
+                this.enableInput();
+            });
 
         $td.contextmenu(e => {
             this.$menu.offset({
@@ -133,14 +160,21 @@ export default class {
             return false;
         });
 
-        $(document).on('click', e => {
-            if (e.button === 0) {
-                this.$menu.offset({
-                    top: 0,
-                    left: 0,
-                }).removeClass('active');
-            }
-        });
+        $(document)
+            .on('click', e => {
+                if (e.button === 0) {
+                    this.$menu.offset({
+                        top: 0,
+                        left: 0,
+                    }).removeClass('active');
+                }
+            })
+            .on('keydown', e => {
+                this.ifCtrlPressed = e.which === 17;
+            })
+            .on('keyup', () => {
+                this.ifCtrlPressed = false;
+            });
 
         this.$btnFontBlack.on('click', () => {
             this.fontHandler('bold');
@@ -164,6 +198,10 @@ export default class {
 
         this.$btnTextRight.on('click', () => {
             this.fontHandler('text-right');
+        });
+
+        this.$btnChangeContent.on('click', () => {
+            this.enableInput();
         });
     }
 }
