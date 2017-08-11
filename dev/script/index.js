@@ -19,4 +19,5 @@ new Table('.table-container', {
         ['2018', 30, 15, 12, 13]],
     rowHeader: true,
     colHeader: true,
+    hasBorder: true,
 });

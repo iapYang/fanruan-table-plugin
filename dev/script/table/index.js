@@ -7,12 +7,16 @@ export default class {
         this.data = options.data;
         this.rowHeader = options.rowHeader || false;
         this.colHeader = options.colHeader || false;
+        this.hasBorder = options.hasBorder || false;
 
         this.ifCtrlPressed = false;
 
         this.$container = $(selector);
 
         this.$table = this.createTable();
+        if (this.hasBorder) {
+            this.$table.addClass('border');
+        }
         this.$container.append(this.$table);
 
         this.$menu = this.createMenu();
