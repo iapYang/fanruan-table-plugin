@@ -32,7 +32,9 @@ export default class {
             const $tr = $('<tr></tr>');
             for (let j = 0; j < this.data[i].length; j++) {
                 const $td = $(`
-                    <td>${this.data[i][j]}</td>
+                    <td>
+                        <input value="${this.data[i][j]}" disabled/>
+                    </td>
                 `);
                 const $drag = $(`
                     <div class="drag">

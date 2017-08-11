@@ -6,10 +6,24 @@
             position: relative;
             display: inline-table;
             font-size: 14px;
-            min-width: 60px;
+            min-width: 180px;
             min-height: 40px; // border: 0.5px solid rgb(194, 208, 222);
             line-height: 40px;
             cursor: pointer;
+            input {
+                display: block;
+                width: 180px;
+                background-color: inherit;
+                border-width: 0;
+                line-height: inherit;
+                cursor: pointer;
+                &:focus {
+                    outline-width: 0;
+                }
+                &:disabled {
+                    color: inherit;
+                }
+            }
             .drag {
                 position: absolute;
                 width: 8px;
@@ -27,22 +41,22 @@
             &.selected {
                 background-color: #e6e6e6;
             }
-            &.bold {
+            &.bold input {
                 font-weight: bold;
             }
-            &.italic {
+            &.italic input {
                 font-style: italic;
             }
-            &.underline {
+            &.underline input {
                 text-decoration: underline;
             }
-            &.text-left {
+            &.text-left input {
                 text-align: left;
             }
-            &.text-center {
+            &.text-center input {
                 text-align: center;
             }
-            &.text-right {
+            &.text-right input {
                 text-align: right;
             }
         }
@@ -63,6 +77,7 @@
             border-radius: 5px;
             border: 1px solid #ddd;
             color: #555;
+            background-color: #fff;
             &:hover {
                 background-color: #f5f5f5;
             }
