@@ -5,7 +5,8 @@
   "main": "iapvt.config.js",
   "scripts": {
     "cli": "iapvt cli -r -s",
-    "start": "iapvt"
+    "start": "iapvt",
+    "gh": "iapvt build && iapvt gh"
   },
   "repository": {
     "type": "git",
