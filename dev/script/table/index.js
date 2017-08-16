@@ -7,7 +7,7 @@ export default class {
         // this.data = options.data;
         this.hasBorder = options.hasBorder || false;
 
-        this.ifCtrlPressed = false;
+        this.mousedown = false;
         this.width = 10;
         this.height = 15;
 
@@ -25,7 +25,7 @@ export default class {
     createTable() {
         const $table = $('<table cellspacing="0"></table>');
         $table.append(this.createThead());
-        const $tbody = $('<tbody></tbody>');
+        this.$tbody = $('<tbody></tbody>');
 
         for (let i = 1; i <= this.width; i++) {
             const $tr = $('<tr></tr>');
@@ -38,10 +38,10 @@ export default class {
 
                 $tr.append(this.createTd(val, i, j, j === 0));
             }
-            $tbody.append($tr);
+            this.$tbody.append($tr);
         }
 
-        $table.append($tbody);
+        $table.append(this.$tbody);
 
         if (this.hasBorder) {
             $table.addClass('border');
@@ -84,6 +84,27 @@ export default class {
         }
 
         return $td;
+    }
+    selectTd() {
+        const startNodeRow = this.$startNode.data('row');
+        const startNodeCol = this.$startNode.data('col');
+
+        const endNodeRow = this.$endNode.data('row');
+        const endNodeCol = this.$endNode.data('col');
+
+        const startRow = Math.min(startNodeRow, endNodeRow);
+        const endRow = Math.max(startNodeRow, endNodeRow);
+
+        const startCol = Math.min(startNodeCol, endNodeCol);
+        const endCol = Math.max(startNodeCol, endNodeCol);
+
+        this.$tbody.find('td').removeClass('selected');
+        
+        for (let i = startRow; i <= endRow; i++) {
+            for (let j = startCol; j <= endCol; j++) {
+                this.$tbody.find(`td.row-${i}.col-${j}`).addClass('selected');
+            }
+        }
     }
     createMenu() {
         const $ul = $(`
@@ -162,15 +183,18 @@ export default class {
         const $td = this.$table.find('td');
 
         $td
+            .on('mousedown', e => {
+                this.mousedown = true;
+                this.$startNode = $(e.currentTarget);
+                this.endInput = e.target;
+            })
             .on('click', e => {
-                const $item = $(e.currentTarget);
+                // const $item = $(e.currentTarget);
 
-                if (!this.ifCtrlPressed) {
-                    $td.removeClass('selected');
-                }
+                // $td.removeClass('selected');
 
-                $item.addClass('selected');
-                this.clearInputStatus($td);
+                // $item.addClass('selected');
+                // this.clearInputStatus($td);
             })
             .on('dblclick', () => {
                 this.enableInput();
@@ -194,11 +218,20 @@ export default class {
                     }).removeClass('active');
                 }
             })
-            .on('keydown', e => {
-                this.ifCtrlPressed = e.which === 17;
+            .on('mousemove', e => {
+                if (!(e.target.nodeName === 'INPUT' && this.mousedown)) return;
+                this.endInput = e.target;
+                this.$endNode = $(this.endInput).parent();
+                this.selectTd();
             })
-            .on('keyup', () => {
-                this.ifCtrlPressed = false;
+            .on('mouseup', e => {
+                this.mousedown = false;
+                if (e.target.nodeName === 'INPUT') {
+                    this.endInput = e.target;
+                }
+                this.$endNode = $(this.endInput).parent();
+
+                this.selectTd();
             });
 
         this.$btnFontBlack.on('click', () => {
