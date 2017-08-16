@@ -99,7 +99,7 @@ export default class {
         const endCol = Math.max(startNodeCol, endNodeCol);
 
         this.$tbody.find('td').removeClass('selected');
-        
+
         for (let i = startRow; i <= endRow; i++) {
             for (let j = startCol; j <= endCol; j++) {
                 this.$tbody.find(`td.row-${i}.col-${j}`).addClass('selected');
@@ -184,9 +184,11 @@ export default class {
 
         $td
             .on('mousedown', e => {
-                this.mousedown = true;
-                this.$startNode = $(e.currentTarget);
-                this.endInput = e.target;
+                if (e.button === 0) {
+                    this.mousedown = true;
+                    this.$startNode = $(e.currentTarget);
+                    this.endInput = e.target;
+                }
             })
             .on('click', e => {
                 // const $item = $(e.currentTarget);
@@ -225,13 +227,19 @@ export default class {
                 this.selectTd();
             })
             .on('mouseup', e => {
-                this.mousedown = false;
-                if (e.target.nodeName === 'INPUT') {
-                    this.endInput = e.target;
+                if (!this.mousedown) {
+                    if (e.button === 0) {
+                        this.$tbody.find('td').removeClass('selected');
+                    }
+                } else {
+                    this.mousedown = false;
+                    if (e.target.nodeName === 'INPUT') {
+                        this.endInput = e.target;
+                    }
+                    this.$endNode = $(this.endInput).parent();
+    
+                    this.selectTd();
                 }
-                this.$endNode = $(this.endInput).parent();
-
-                this.selectTd();
             });
 
         this.$btnFontBlack.on('click', () => {
