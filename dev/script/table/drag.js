@@ -26,10 +26,15 @@ export default class {
                             height: e.pageY - this.$td.offset().top,
                         });
                     } else {
-                        console.log($table.find(`.col-${col}`));
-                        $table.find(`.col-${col}`).css({
-                            width: e.pageX - this.$td.offset().left,
-                        });
+                        $table
+                            .find(`.col-${col}`)
+                            .find('input')
+                            .css({
+                                width: Math.max(
+                                    e.pageX -
+                                    this.$td.offset().left, 60
+                                ),
+                            });
                     }
                 }
             })
