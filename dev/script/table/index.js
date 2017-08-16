@@ -8,7 +8,7 @@ export default class {
         this.hasBorder = options.hasBorder || false;
 
         this.mousedown = false;
-        this.width = 10;
+        this.width = 5;
         this.height = 15;
 
         this.$container = $(selector);
@@ -27,9 +27,9 @@ export default class {
         $table.append(this.createThead());
         this.$tbody = $('<tbody></tbody>');
 
-        for (let i = 1; i <= this.width; i++) {
+        for (let i = 1; i <= this.height; i++) {
             const $tr = $('<tr></tr>');
-            for (let j = 0; j <= this.height; j++) {
+            for (let j = 0; j <= this.width; j++) {
                 let val = '';
 
                 if (j === 0) {
@@ -52,7 +52,7 @@ export default class {
     createThead() {
         const $thead = $('<thead></thead>');
         const $tr = $('<tr></tr>');
-        for (let i = 0; i <= this.height; i++) {
+        for (let i = 0; i <= this.width; i++) {
             let val = '';
             if (i > 0) {
                 val = String.fromCharCode(64 + i);
