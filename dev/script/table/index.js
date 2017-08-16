@@ -83,6 +83,12 @@ export default class {
             $td.addClass('header-td');
         }
 
+        if (col === 0) {
+            $td.append(`
+                <div class="drag-bottom"></div>
+            `);
+        }
+
         return $td;
     }
     selectTd() {
@@ -184,9 +190,11 @@ export default class {
 
         $td
             .on('mousedown', e => {
+                const $startNode = $(e.currentTarget);
+                if ($startNode.hasClass('header-td')) return;
                 if (e.button === 0) {
                     this.mousedown = true;
-                    this.$startNode = $(e.currentTarget);
+                    this.$startNode = $startNode;
                     this.endInput = e.target;
                 }
             })
@@ -214,8 +222,13 @@ export default class {
             })
             .on('mousemove', e => {
                 if (!(e.target.nodeName === 'INPUT' && this.mousedown)) return;
-                this.endInput = e.target;
-                this.$endNode = $(this.endInput).parent();
+                const endInput = e.target;
+                const $endNode = $(endInput).parent();
+
+                if ($endNode.hasClass('header-td')) return;
+
+                this.endInput = endInput;
+                this.$endNode = $endNode;
                 this.selectTd();
             })
             .on('mouseup', e => {
