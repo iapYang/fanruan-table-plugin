@@ -5,8 +5,6 @@ import Drag from './drag';
 export default class {
     constructor(selector, options) {
         // this.data = options.data;
-        this.rowHeader = true;
-        this.colHeader = true;
         this.hasBorder = options.hasBorder || false;
 
         this.ifCtrlPressed = false;
@@ -36,44 +34,19 @@ export default class {
     }
     createTable() {
         const $table = $('<table cellspacing="0"></table>');
+        $table.append(this.createThead());
         const $tbody = $('<tbody></tbody>');
 
-        for (let i = 0; i <= 200; i++) {
+        for (let i = 1; i <= 200; i++) {
             const $tr = $('<tr></tr>');
             for (let j = 0; j <= 26; j++) {
                 let val = '';
-                if (i === 0 && j > 0) {
-                    val = String.fromCharCode(64 + j);
-                }
-                if (j === 0 && i > 0) {
+
+                if (j === 0) {
                     val = i;
                 }
-                const $td = $(`
-                    <td colspan="1">
-                        <input
-                        value="${val}"
-                        disabled/>
-                    </td>
-                `);
 
-                $td
-                    .data('row', i)
-                    .data('col', j)
-                    .addClass(`row-${i}`)
-                    .addClass(`col-${j}`);
-
-                if (i === 0 && this.rowHeader) {
-                    $td.addClass('header-td');
-                }
-                if (j === 0 && this.colHeader) {
-                    $td.addClass('header-td');
-                }
-
-                if (!$td.hasClass('header-td')) {
-                    new Drag($td, $table);
-                }
-
-                $tr.append($td);
+                $tr.append(this.createTd(val, i, j, j === 0));
             }
             $tbody.append($tr);
         }
@@ -81,6 +54,42 @@ export default class {
         $table.append($tbody);
 
         return $table;
+    }
+    createThead() {
+        const $thead = $('<thead></thead>');
+        const $tr = $('<tr></tr>');
+        for (let i = 0; i <= 26; i++) {
+            let val = '';
+            if (i > 0) {
+                val = String.fromCharCode(64 + i);
+            }
+
+            $tr.append(this.createTd(val, 0, i, true));
+        }
+
+        $thead.append($tr).append($tr.clone());
+
+        return $thead;
+    }
+    createTd(val, row, col, ifHeader) {
+        const $td = $(`
+            <td colspan="1">
+                <input
+                    value="${val}"
+                    disabled
+                />
+            </td>
+        `)
+            .data('row', row)
+            .data('col', col)
+            .addClass(`row-${row}`)
+            .addClass(`col-${col}`);
+
+        if (ifHeader) {
+            $td.addClass('header-td');
+        }
+
+        return $td;
     }
     createMenu() {
         const $ul = $(`
