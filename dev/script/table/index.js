@@ -190,14 +190,6 @@ export default class {
                     this.endInput = e.target;
                 }
             })
-            .on('click', e => {
-                // const $item = $(e.currentTarget);
-
-                // $td.removeClass('selected');
-
-                // $item.addClass('selected');
-                // this.clearInputStatus($td);
-            })
             .on('dblclick', () => {
                 this.enableInput();
             });
@@ -227,10 +219,10 @@ export default class {
                 this.selectTd();
             })
             .on('mouseup', e => {
+                if (e.button !== 0) return;
+                if (e.target.nodeName === 'LI') return;
                 if (!this.mousedown) {
-                    if (e.button === 0) {
-                        this.$tbody.find('td').removeClass('selected');
-                    }
+                    this.$tbody.find('td').removeClass('selected');
                 } else {
                     this.mousedown = false;
                     if (e.target.nodeName === 'INPUT') {
@@ -270,8 +262,8 @@ export default class {
             this.enableInput();
         });
 
-        this.$btnAllInOne.on('click', () => {
-            const $selected = this.$table.find('.selected');
+        this.$btnAllInOne.on('click', e => {
+            const $selected = this.$tbody.find('td.selected');
 
             const rowSet = new Set();
             const colSet = new Set();
@@ -284,18 +276,16 @@ export default class {
 
             console.log(rowSet.size, colSet.size);
 
-            if (rowSet.size !== 1 && colSet.size !== 1) return;
-
-            const attribute = rowSet.size === 1 ? 'colspan' : 'rowspan';
-            const length = $selected.length;
-
             $selected.each((index, item) => {
                 if (index !== 0) {
                     $(item).remove();
                 }
             });
 
-            $selected.eq(0).attr(attribute, length);
+            $selected
+                .eq(0)
+                .attr('colspan', colSet.size)
+                .attr('rowspan', rowSet.size);
         });
     }
 }
