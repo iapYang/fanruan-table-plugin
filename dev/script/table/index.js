@@ -18,16 +18,7 @@ export default class {
 
         this.$menu = this.createMenu();
         this.$container.append(this.$menu);
-
-        this.$btnFontBlack = this.$menu.find('.fontBlack');
-        this.$btnFontItalic = this.$menu.find('.fontItalic');
-        this.$btnFontUnderline = this.$menu.find('.fontUnderline');
-        this.$btnTextLeft = this.$menu.find('.textLeft');
-        this.$btnTextCenter = this.$menu.find('.textCenter');
-        this.$btnTextRight = this.$menu.find('.textRight');
-
-        this.$btnChangeContent = this.$menu.find('.changeContent');
-        this.$btnAllInOne = this.$menu.find('.allInOne');
+        this.menuStuffInit();
 
         this.tdEventListener();
     }
@@ -125,6 +116,17 @@ export default class {
         `);
 
         return $ul;
+    }
+    menuStuffInit() {
+        this.$btnFontBlack = this.$menu.find('.fontBlack');
+        this.$btnFontItalic = this.$menu.find('.fontItalic');
+        this.$btnFontUnderline = this.$menu.find('.fontUnderline');
+        this.$btnTextLeft = this.$menu.find('.textLeft');
+        this.$btnTextCenter = this.$menu.find('.textCenter');
+        this.$btnTextRight = this.$menu.find('.textRight');
+
+        this.$btnChangeContent = this.$menu.find('.changeContent');
+        this.$btnAllInOne = this.$menu.find('.allInOne');
     }
     fontHandler(className) {
         const $selected = this.$table.find('.selected');
