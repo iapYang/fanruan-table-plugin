@@ -58,16 +58,16 @@ export default class {
                 val = String.fromCharCode(64 + i);
             }
 
-            $tr.append(this.createTd(val, 0, i, true));
+            $tr.append(this.createTd(val, 0, i, true, true));
         }
 
         $thead.append($tr).append($tr.clone());
 
         return $thead;
     }
-    createTd(val, row, col, ifHeader) {
+    createTd(val, row, col, ifHeader, ifFirstRow) {
         const $td = $(`
-            <td colspan="1">
+            <td>
                 <input
                     value="${val}"
                     disabled
@@ -85,8 +85,18 @@ export default class {
 
         if (col === 0) {
             $td.append(`
-                <div class="drag-bottom"></div>
+                <div class="drag drag-bottom"></div>
             `);
+
+            new Drag($td);
+        }
+
+        if (ifFirstRow && col !== 0) {
+            $td.append(`
+                <div class="drag drag-right"></div>
+            `);
+
+            new Drag($td);
         }
 
         return $td;
@@ -242,7 +252,7 @@ export default class {
                         this.endInput = e.target;
                     }
                     this.$endNode = $(this.endInput).parent();
-    
+
                     this.selectTd();
                 }
             });

@@ -1,8 +1,7 @@
 import $ from 'jquery';
 
 export default class {
-    constructor(selector, table) {
-        this.$table = $(table);
+    constructor(selector) {
         this.$td = $(selector);
         this.$drag = this.$td.find('.drag');
 
@@ -21,12 +20,17 @@ export default class {
                 if (this.isResizing) {
                     const col = this.$td.data('col');
                     const row = this.$td.data('row');
-                    this.$table.find(`.row-${row}`).css({
-                        height: e.pageY - this.$td.offset().top,
-                    });
-                    this.$table.find(`.col-${col}`).css({
-                        width: e.pageX - this.$td.offset().left,
-                    });
+                    const $table = this.$td.parents('table');
+                    if (this.$drag.hasClass('drag-bottom')) {
+                        $table.find(`.row-${row}`).css({
+                            height: e.pageY - this.$td.offset().top,
+                        });
+                    } else {
+                        console.log($table.find(`.col-${col}`));
+                        $table.find(`.col-${col}`).css({
+                            width: e.pageX - this.$td.offset().left,
+                        });
+                    }
                 }
             })
             .on('mouseup', () => {

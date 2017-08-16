@@ -16,6 +16,7 @@
             position: relative;
             display: table-cell;
             font-size: 14px;
+            width: 120px;
             min-width: 120px;
             min-height: 20px;
             height: 20px;
@@ -37,16 +38,28 @@
                     color: inherit;
                 }
             }
-            .drag-bottom {
+            .drag {
                 position: absolute;
-                left: 0;
-                bottom: 0;
-                width: 100%;
-                height: 2px;
-                background-color: red;
-                cursor: s-resize;
                 opacity: 0;
                 transition: opacity ease 0.3s;
+
+                &.drag-bottom {
+                    left: 0;
+                    bottom: 0;
+                    width: 100%;
+                    height: 2px;
+                    background-color: black;
+                    cursor: s-resize;
+                }
+
+                &.drag-right {
+                    right: 0;
+                    top: 0;
+                    width: 2px;
+                    height: 100%;
+                    background-color: black;
+                    cursor: e-resize;
+                }
 
                 &:hover {
                     opacity: 1;
