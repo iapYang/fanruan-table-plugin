@@ -180,7 +180,7 @@ export default class {
             .attr('disabled', false);
     }
     tdEventListener() {
-        const $td = this.$table.find('td');
+        const $td = this.$tbody.find('td');
 
         $td
             .on('mousedown', e => {
