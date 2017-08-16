@@ -4,9 +4,9 @@ import Drag from './drag';
 
 export default class {
     constructor(selector, options) {
-        this.data = options.data;
-        this.rowHeader = options.rowHeader || false;
-        this.colHeader = options.colHeader || false;
+        // this.data = options.data;
+        this.rowHeader = true;
+        this.colHeader = true;
         this.hasBorder = options.hasBorder || false;
 
         this.ifCtrlPressed = false;
@@ -38,18 +38,22 @@ export default class {
         const $table = $('<table cellspacing="0"></table>');
         const $tbody = $('<tbody></tbody>');
 
-        for (let i = 0; i < this.data.length; i++) {
+        for (let i = 0; i <= 200; i++) {
             const $tr = $('<tr></tr>');
-            for (let j = 0; j < this.data[i].length; j++) {
+            for (let j = 0; j <= 26; j++) {
+                let val = '';
+                if (i === 0 && j > 0) {
+                    val = String.fromCharCode(64 + j);
+                }
+                if (j === 0 && i > 0) {
+                    val = i;
+                }
                 const $td = $(`
                     <td colspan="1">
-                        <input value="${this.data[i][j]}" disabled/>
+                        <input
+                        value="${val}"
+                        disabled/>
                     </td>
-                `);
-                const $drag = $(`
-                    <div class="drag">
-                        <img src="${require('../../image/triangle_16px_1103136_easyicon.net.png')}" />
-                    </div>
                 `);
 
                 $td
@@ -66,7 +70,6 @@ export default class {
                 }
 
                 if (!$td.hasClass('header-td')) {
-                    $td.append($drag);
                     new Drag($td, $table);
                 }
 
