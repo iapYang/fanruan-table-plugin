@@ -8,13 +8,9 @@ export default class {
         this.hasBorder = options.hasBorder || false;
 
         this.ifCtrlPressed = false;
-
         this.$container = $(selector);
 
         this.$table = this.createTable();
-        if (this.hasBorder) {
-            this.$table.addClass('border');
-        }
         this.$container.append(this.$table);
 
         this.$menu = this.createMenu();
@@ -52,6 +48,10 @@ export default class {
         }
 
         $table.append($tbody);
+
+        if (this.hasBorder) {
+            this.$table.addClass('border');
+        }
 
         return $table;
     }
