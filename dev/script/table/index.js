@@ -67,7 +67,7 @@ export default class {
     }
     createTd(val, row, col, ifHeader, ifFirstRow) {
         const $td = $(`
-            <td>
+            <td colspan="1" rowspan="1">
                 <input
                     value="${val}"
                     disabled
